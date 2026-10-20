@@ -1,0 +1,92 @@
+@page "/checkout"
+@inject CartService Cart
+
+<PageTitle>Checkout · BeyondCanvas</PageTitle>
+
+@if (complete)
+{
+    <main class="flex min-h-[calc(100vh-82px)] flex-col items-center px-[4vw] py-[15vh] text-center">
+        <div class="mb-[30px] grid size-[58px] place-items-center rounded-full bg-violet text-white">✓</div>
+        <p class="eyebrow">Transaction confirmed</p>
+        <h1 class="display-title mx-auto my-7 max-w-[900px]">Your collection just got better.</h1>
+        <p class="mb-[30px] text-[#6d6a64]">Your new work is on its way to your connected wallet.</p>
+        <a href="/catalog" class="btn bg-ink text-white hover:bg-violet">Keep exploring <span aria-hidden="true">↗</span></a>
+    </main>
+}
+else
+{
+    <main class="grid min-h-[720px] grid-cols-1 gap-[7vw] px-[5vw] pt-[8vh] pb-[12vh] sm:px-[4vw] sm:pt-[10vh] sm:pb-[14vh] md:grid-cols-[minmax(0,1.65fr)_minmax(330px,0.8fr)]">
+        <section>
+            <p class="eyebrow">Secure checkout</p>
+            <h1 class="display-title mb-[60px] text-[clamp(60px,8vw,110px)]">
+                Your bag <sup class="ml-2.5 align-top font-mono text-sm tracking-normal text-violet">@Cart.Count</sup>
+            </h1>
+
+            @if (Cart.Count > 0)
+            {
+                <div class="border-t border-line">
+                    @for (var i = 0; i < Cart.Items.Count; i++)
+                    {
+                        var index = i;
+                        var item = Cart.Items[i];
+                        <article class="grid grid-cols-[82px_1fr] grid-rows-[1fr_auto] gap-x-5 border-b border-line py-5 sm:grid-cols-[105px_1fr_auto]">
+                            <img src="@item.Image" alt="" class="row-span-2 h-[100px] w-[82px] object-cover sm:h-[120px] sm:w-[105px]" />
+                            <div>
+                                <p class="text-[10px] text-[#6d6a64]">@item.Category · Edition 1 of 1</p>
+                                <h2 class="mt-[9px] mb-[7px] text-xl">@item.Title</h2>
+                                <span class="text-[10px] text-[#6d6a64]">by @item.Creator</span>
+                            </div>
+                            <strong class="col-start-2 mt-2.5 font-mono text-xs sm:col-start-auto sm:mt-0">@item.Price.ToString("0.00") ETH</strong>
+                            <button type="button" @onclick="() => Cart.RemoveAt(index)"
+                                    class="col-start-2 mt-3 cursor-pointer justify-self-start border-b border-ink bg-transparent p-0 text-[10px] sm:col-start-3 sm:mt-0 sm:justify-self-end">
+                                Remove
+                            </button>
+                        </article>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="border-t border-line pt-[35px]">
+                    <h2 class="mb-2 text-[26px]">Your bag is waiting.</h2>
+                    <p class="mb-[25px] text-[#6d6a64]">Discover a work that speaks to you.</p>
+                    <a href="/catalog" class="btn w-max bg-ink text-white hover:bg-violet">Browse collection <span aria-hidden="true">↗</span></a>
+                </div>
+            }
+        </section>
+
+        <aside class="self-start bg-violet p-8 text-white md:sticky md:top-[30px]">
+            <p class="eyebrow mb-[45px] text-[#d7d0ff]">Order summary</p>
+            <div class="flex justify-between border-b border-[#8572ee] py-[15px] text-xs">
+                <span>Artwork subtotal</span>
+                <strong class="font-mono text-[11px]">@Cart.Subtotal.ToString("0.00") ETH</strong>
+            </div>
+            <div class="flex justify-between border-b border-[#8572ee] py-[15px] text-xs">
+                <span>Marketplace fee (2.5%)</span>
+                <strong class="font-mono text-[11px]">@Cart.Fee.ToString("0.000") ETH</strong>
+            </div>
+            <div class="grid grid-cols-[1fr_auto] pt-7 pb-10">
+                <span class="text-[13px]">Total</span>
+                <strong class="font-mono text-[22px]">@Cart.Total.ToString("0.000") ETH</strong>
+                <small class="col-start-2 mt-[5px] text-right text-[10px] text-[#d7d0ff]">≈ $@((Cart.Total * CartService.EthUsd).ToString("N0"))</small>
+            </div>
+            <button type="button" disabled="@(Cart.Count == 0)" @onclick="Confirm"
+                    class="btn w-full bg-acid text-ink enabled:hover:bg-white disabled:cursor-not-allowed disabled:opacity-45">
+                Confirm purchase <span aria-hidden="true">↗</span>
+            </button>
+            <p class="mx-[15px] mt-[18px] text-center text-[9px] leading-[1.6] text-[#d7d0ff]">
+                Your transaction is secured by the Ethereum network. Gas included.
+            </p>
+        </aside>
+    </main>
+}
+
+@code {
+    private bool complete;
+
+    private void Confirm()
+    {
+        Cart.Clear();
+        complete = true;
+    }
+}

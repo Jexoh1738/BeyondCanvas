@@ -1,0 +1,33 @@
+@implements IDisposable
+@inject CartService Cart
+
+<header class="relative z-10 grid h-[70px] grid-cols-[1fr_auto] items-center border-b border-line px-[4vw] sm:h-[82px] md:grid-cols-[1fr_auto_1fr]">
+    <a href="/" class="flex items-center gap-[11px] justify-self-start text-[15px] font-bold tracking-[-0.03em]">
+        <span class="relative size-[17px] rounded-full border-[5px] border-violet after:absolute after:-right-2 after:-bottom-[5px] after:size-1.5 after:bg-acid"></span>
+        BeyondCanvas
+    </a>
+
+    <nav class="hidden gap-9 md:flex" aria-label="Primary navigation">
+        <NavLink href="/" Match="NavLinkMatch.All"
+                 class="border-b-[3px] border-transparent px-0.5 pt-[29px] pb-[25px] text-[13px] font-semibold [&.active]:border-ink">
+            Home
+        </NavLink>
+        <NavLink href="/catalog"
+                 class="border-b-[3px] border-transparent px-0.5 pt-[29px] pb-[25px] text-[13px] font-semibold [&.active]:border-ink">
+            Catalog
+        </NavLink>
+    </nav>
+
+    <a href="/checkout" class="flex items-center gap-2.5 justify-self-end text-[13px] font-semibold">
+        Bag
+        <span class="grid h-[27px] min-w-[27px] place-items-center rounded-full bg-ink text-white">@Cart.Count</span>
+    </a>
+</header>
+
+@code {
+    protected override void OnInitialized() => Cart.OnChange += HandleChange;
+
+    private void HandleChange() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Cart.OnChange -= HandleChange;
+}

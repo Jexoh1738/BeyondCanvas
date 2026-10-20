@@ -1,0 +1,23 @@
+<article class="group animate-rise" style="animation-delay:@(Index * 70)ms">
+    <div class="relative aspect-[0.88] overflow-hidden bg-[#ddd9cf]">
+        <img src="@Item.Image" alt="@Item.Title by @Item.Creator"
+             class="block size-full object-cover transition-transform duration-[450ms] group-hover:scale-[1.035]" />
+        <button type="button" @onclick="() => OnCollect.InvokeAsync(Item)"
+                class="absolute right-3 bottom-3 flex cursor-pointer gap-7 bg-paper px-4 py-[13px] text-[11px] font-semibold opacity-0 translate-y-1.5 transition duration-[180ms] group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100 max-sm:translate-y-0 max-sm:opacity-100">
+            Collect <span aria-hidden="true">↗</span>
+        </button>
+    </div>
+    <div class="flex items-start justify-between pt-[15px]">
+        <div>
+            <h3 class="mb-[5px] text-[15px] tracking-[-0.03em]">@Item.Title</h3>
+            <p class="text-[11px] text-[#6d6a64]">by @Item.Creator</p>
+        </div>
+        <strong class="font-mono text-[11px]">@Item.Price.ToString("0.00") ETH</strong>
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Artwork Item { get; set; } = default!;
+    [Parameter] public int Index { get; set; }
+    [Parameter] public EventCallback<Artwork> OnCollect { get; set; }
+}

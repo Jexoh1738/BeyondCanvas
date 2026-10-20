@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #161616;
+  --color-paper: #f2f0ea;
+  --color-violet: #6448f4;
+  --color-line: #c9c6bd;
+  --color-acid: #d9ff43;
+
+  --font-sans: "Manrope", sans-serif;
+  --font-mono: "DM Mono", monospace;
+  --font-serif: "Playfair Display", serif;
+
+  /* matches the original 540px / 820px breakpoints (max-sm / max-md = mobile) */
+  --breakpoint-sm: 541px;
+  --breakpoint-md: 821px;
+
+  --animate-rise: rise 500ms both;
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@layer base {
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis: none;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  select:focus-visible {
+    outline: 3px solid var(--color-violet);
+    outline-offset: 3px;
+  }
+}
+
+/* Small reusable pieces. Colours are added with normal utilities in the markup. */
+@layer components {
+  .eyebrow {
+    @apply font-mono text-[11px] tracking-[0.12em] uppercase;
+  }
+
+  .btn {
+    @apply flex cursor-pointer items-center justify-between gap-[25px] px-5 py-[17px] text-xs font-semibold transition duration-[180ms] hover:-translate-y-0.5;
+  }
+
+  /* --glow (0 to 1) is set by wwwroot/glow.js based on how close the mouse is */
+  .glow-text {
+    --glow: 0;
+    text-shadow:
+      0 0 calc(var(--glow) * 10px) rgb(100 72 244 / calc(var(--glow) * 0.9)),
+      0 0 calc(var(--glow) * 28px) rgb(100 72 244 / calc(var(--glow) * 0.7)),
+      0 0 calc(var(--glow) * 56px) rgb(217 255 67 / calc(var(--glow) * 0.55));
+    transition: text-shadow 150ms ease-out;
+  }
+
+  .display-title {
+    @apply mt-7 max-w-[1000px] text-[clamp(56px,8.6vw,132px)] leading-[0.9] font-medium tracking-[-0.075em];
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

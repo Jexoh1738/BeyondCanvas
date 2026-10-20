@@ -1,0 +1,69 @@
+@page "/catalog"
+@inject ArtworkService Art
+@inject CartService Cart
+@inject NavigationManager Nav
+
+<PageTitle>Catalog · BeyondCanvas</PageTitle>
+
+<main class="px-[5vw] py-[8vh] sm:px-[4vw] sm:py-[10vh]">
+    <section class="relative border-b border-line pt-[4vh] pb-[8vh]">
+        <p class="eyebrow">The complete index</p>
+        <h1 class="display-title">Collect what moves you.</h1>
+        <span class="mt-[25px] block font-mono text-[10px] sm:absolute sm:right-0 sm:bottom-[18px] sm:mt-0">128 works / 42 artists</span>
+    </section>
+
+    <section class="flex flex-col items-start gap-[22px] pt-5 pb-[42px] sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-wrap gap-1.5">
+            @foreach (var c in Art.Categories)
+            {
+                <button type="button" @onclick="() => category = c"
+                        class="cursor-pointer rounded-full border px-4 py-2.5 text-[11px] @(c == category ? "border-ink bg-ink text-white" : "border-line bg-transparent")">
+                    @c
+                </button>
+            }
+        </div>
+        <label class="font-mono text-[10px] uppercase">
+            Sort
+            <select @bind="sort" class="ml-2 border-0 border-b border-ink bg-transparent py-[7px] pr-[25px] pl-3.5">
+                <option>Curated</option>
+                <option>Price: Low</option>
+                <option>Price: High</option>
+            </select>
+        </label>
+    </section>
+
+    <section class="grid grid-cols-1 gap-y-[34px] sm:grid-cols-2 sm:gap-x-4 md:grid-cols-3 md:gap-x-[2vw] md:gap-y-[58px]">
+        @foreach (var (item, index) in Results.Select((a, i) => (a, i)))
+        {
+            <ArtCard @key="item.Id" Item="item" Index="index" OnCollect="Collect" />
+        }
+    </section>
+</main>
+
+@code {
+    private string category = "All";
+    private string sort = "Curated";
+
+    private IEnumerable<Artwork> Results
+    {
+        get
+        {
+            var filtered = category == "All"
+                ? Art.GetAll()
+                : Art.GetAll().Where(a => a.Category == category);
+
+            return sort switch
+            {
+                "Price: Low"  => filtered.OrderBy(a => a.Price),
+                "Price: High" => filtered.OrderByDescending(a => a.Price),
+                _             => filtered
+            };
+        }
+    }
+
+    private void Collect(Artwork item)
+    {
+        Cart.Add(item);
+        Nav.NavigateTo("/checkout");
+    }
+}

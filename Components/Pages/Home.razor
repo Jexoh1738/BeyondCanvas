@@ -1,0 +1,74 @@
+@page "/"
+@inject ArtworkService Art
+@inject CartService Cart
+@inject NavigationManager Nav
+
+<PageTitle>BeyondCanvas</PageTitle>
+
+<main>
+    <section class="grid min-h-[650px] grid-cols-1 border-b border-line md:grid-cols-[55%_45%]">
+        <div class="flex min-h-[560px] flex-col justify-between px-[5vw] pt-[9vh] pb-[6vh] sm:min-h-[600px] md:min-h-0 md:pt-[10vh] md:pr-[5vw] md:pb-[5vh] md:pl-[4vw]">
+            <p class="eyebrow">Independent digital editions · 2025</p>
+            <h1 class="mt-[3vh] mb-[7vh] text-[16vw] leading-[0.91] font-medium tracking-[-0.075em] sm:text-[clamp(58px,7.2vw,118px)]">
+                Art that lives<br />
+                <em data-glow class="glow-text inline-block font-serif font-semibold text-violet">beyond</em> the frame.
+            </h1>
+            <div class="flex flex-col items-start gap-8 md:flex-row md:items-end md:justify-between">
+                <p class="max-w-[390px] text-sm leading-[1.65]">
+                    A highly curated marketplace for singular digital works by artists reshaping culture.
+                </p>
+                <a href="/catalog" class="btn bg-ink text-white hover:bg-violet">
+                    Explore the collection <span aria-hidden="true">↗</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="group relative min-h-[440px] overflow-hidden sm:min-h-[560px] md:min-h-[650px]">
+            <img src="@Art.Featured.Image" alt="Featured artwork, @Art.Featured.Title"
+                 class="block size-full object-cover transition-transform duration-700 group-hover:scale-[1.025]" />
+            <div class="absolute right-0 bottom-0 grid w-[min(300px,75%)] gap-1.5 bg-acid px-5 py-[18px]">
+                <span class="font-mono text-[10px] uppercase">Featured drop</span>
+                <strong class="text-[13px]">01 / @Art.Featured.Title</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="flex min-h-[62px] items-center justify-around gap-6 bg-violet px-[4vw] font-mono text-[10px] tracking-[0.08em] text-white" aria-label="Marketplace qualities">
+        @for (var i = 0; i < _qualities.Length; i++)
+        {
+            if (i > 0)
+            {
+                <i class="size-[5px] rotate-45 bg-acid @(i >= 2 ? "max-md:hidden" : "")"></i>
+            }
+            <span class="@(i >= 2 ? "max-md:hidden" : "")">@_qualities[i]</span>
+        }
+    </section>
+
+    <section class="px-[5vw] py-[8vh] sm:px-[4vw] sm:py-[10vh]">
+        <div class="mb-[42px] flex flex-col items-start gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="eyebrow">Fresh from the studios</p>
+                <h2 class="mt-2 text-[clamp(40px,5vw,70px)] font-medium tracking-[-0.065em]">Objects of desire</h2>
+            </div>
+            <a href="/catalog" class="border-b border-ink pb-1.5 text-xs">View all 128 works <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="grid grid-cols-1 gap-y-[34px] sm:grid-cols-2 sm:gap-x-4 md:grid-cols-3 md:gap-[2vw]">
+            @foreach (var (item, index) in Art.GetAll().Skip(1).Take(3).Select((a, i) => (a, i)))
+            {
+                <ArtCard Item="item" Index="index" OnCollect="Collect" />
+            }
+        </div>
+    </section>
+</main>
+
+@code {
+    private static readonly string[] _qualities =
+        ["CURATED EDITIONS", "PROVABLE OWNERSHIP", "ARTIST FIRST", "ON-CHAIN FOREVER"];
+
+    private void Collect(Artwork item)
+    {
+        Cart.Add(item);
+        Nav.NavigateTo("/checkout");
+    }
+}
