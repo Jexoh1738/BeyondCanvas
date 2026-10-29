@@ -11,7 +11,14 @@ public class ArtworkService
         new(3, "Soft Machine",    "Rey Kato",   3.10m, "3D",          "/images/soft-machine.jpg"),
         new(4, "Garden of Unspoken Words", "Lleah Matsuda",  0.92m, "Abstract",    "/images/garden-unspoken.jpg"),
         new(5, "Portrait of Self","Unknown",  1.48m, "Generative", "/images/self-insert.jpg"),
-        new(6, "Afterglow",       "June Static",2.05m, "Generative",  "/images/afterglow.jpg"),
+        new(6, "Afterglow","June Static",2.05m, "Generative",  "/images/afterglow.jpg"),
+        new(7, "Crescent Silver","D Marshall",2.05m, "Generative",  "/images/crescent-silver.jpg"),
+        new(8, "Unnamed Man","Weak Alcovich",2.05m, "Realistic",  "/images/unnamed-man.jpg"),
+        new(9, "Van Gone","John Silverware",2.05m, "Generative",  "/images/van-gone.jpg"),
+        new(10, "Individual Roman","Hoo Jim Kim",2.05m, "Realistic",  "/images/individual-roman.jpg"),
+        new(11, "Double Dog","Kaye Eight",2.05m, "Realistic",  "/images/double-dog.jpg"),
+        new(12, "Solar Express","Plus8",1.00m, "Generative",  "/images/solar-express.jpg"),
+        new(13, "Spanish Fajita","Miguel Enrique",2.05m, "3D",  "/images/spanish-fajita.jpg"),
     ];
 
     public IReadOnlyList<Artwork> GetAll() => _art;

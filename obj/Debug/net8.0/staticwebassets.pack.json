@@ -17,12 +17,24 @@
       "PackagePath": "staticwebassets\\images\\afterglow.jpg"
     },
     {
+      "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\crescent-silver.jpg",
+      "PackagePath": "staticwebassets\\images\\crescent-silver.jpg"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\double-dog.jpg",
+      "PackagePath": "staticwebassets\\images\\double-dog.jpg"
+    },
+    {
       "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\frequency-07.jpg",
       "PackagePath": "staticwebassets\\images\\frequency-07.jpg"
     },
     {
       "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\garden-unspoken.jpg",
       "PackagePath": "staticwebassets\\images\\garden-unspoken.jpg"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\individual-roman.jpg",
+      "PackagePath": "staticwebassets\\images\\individual-roman.jpg"
     },
     {
       "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\self-insert.jpg",
@@ -33,8 +45,24 @@
       "PackagePath": "staticwebassets\\images\\soft-machine.jpg"
     },
     {
+      "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\solar-express.jpg",
+      "PackagePath": "staticwebassets\\images\\solar-express.jpg"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\spanish-fajita.jpg",
+      "PackagePath": "staticwebassets\\images\\spanish-fajita.jpg"
+    },
+    {
       "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\synthetic-bloom.jpg",
       "PackagePath": "staticwebassets\\images\\synthetic-bloom.jpg"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\unnamed-man.jpg",
+      "PackagePath": "staticwebassets\\images\\unnamed-man.jpg"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W42\\Midterm\\wwwroot\\images\\van-gone.jpg",
+      "PackagePath": "staticwebassets\\images\\van-gone.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Midterm.Microsoft.AspNetCore.StaticWebAssets.props",
